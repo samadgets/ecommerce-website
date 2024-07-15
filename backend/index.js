@@ -4,36 +4,32 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import productRoutes from './routes/productRoutes.js';
-import { protectRoute } from './middlewares/authMiddleware.js';
 import { errorHandler } from './middlewares/errorMiddleware.js';
-
+//import { protectRoute } from './middlewares/authMiddleware.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 // Connect to MongoDB
 connectDB();
 
-
-// Middleware
+// Middlewares
 app.use(express.json());
+app.use(errorHandler);
 
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/orders', protectRoute, orderRoutes);
-
-
-app.use(errorHandler);
-
+app.use('/api/orders', orderRoutes);
 
 app.get('/', (req, res) => {
-  res.send('E-Commerce Backend API');
+  res.send('E-commerce Backend API');
 });
 
+
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

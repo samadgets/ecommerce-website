@@ -1,16 +1,9 @@
 import express from 'express';
-import {getOrders} from '../controllers/orderController.js'
-
-
-
-
 const router = express.Router();
+import { addOrderItems, getOrderById } from '../controllers/orderController.js';
+import { protectRoute } from '../middlewares/authMiddleware.js';
 
-// Example route
-router.get('/test', (req, res) => {
-  res.send('Order route is working!');
-});
-
-router.get('/Order', getOrders);
+router.route('/').post(protectRoute, addOrderItems);
+router.route('/:id').get(protectRoute, getOrderById);
 
 export default router;

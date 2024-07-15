@@ -4,13 +4,15 @@ const orderSchema = new mongoose.Schema({
   
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', required: true
+        ref: 'User',
+        required: true
     },
 
   orderItems: [{
     
     name: {
-        type: String, required: true
+        type: String,
+        required: true
     },
 
     quantity: {
