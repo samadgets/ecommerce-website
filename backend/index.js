@@ -1,9 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import { upload } from './middlewares/uploadMiddleware.js';
 import { errorHandler } from './middlewares/errorMiddleware.js';
 //import { protectRoute } from './middlewares/authMiddleware.js';
 
@@ -18,11 +20,17 @@ connectDB();
 // Middlewares
 app.use(express.json());
 app.use(errorHandler);
+app.use(cors());
 
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/upload', upload);
+
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
 
 app.get('/', (req, res) => {
   res.send('E-commerce Backend API');

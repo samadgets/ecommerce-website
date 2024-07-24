@@ -8,13 +8,13 @@ import {
   updateProduct,
   createProductReview,
 } from '../controllers/productController.js';
-import { protectRoute, admin } from '../middleware/authMiddleware.js';
+import { protectRoute, admin } from '../middlewares/authMiddleware.js';
 
 router.route('/').get(getProducts).post(protectRoute, admin, createProduct);
 router
   .route('/:id')
   .get(getProductById)
-  .delete(protectRoute, admin, deleteProduct)
+  .delete(protectRoute, admin, deleteProduct) 
   .put(protectRoute, admin, updateProduct);
 router.route('/:id/reviews').post(protectRoute, createProductReview);
 
